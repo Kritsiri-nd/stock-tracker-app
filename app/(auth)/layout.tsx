@@ -34,7 +34,8 @@ const layout = ({ children }: { children: React.ReactNode }) => {
                     </div>
                 </div>
                 <div className="flex-1 relative">
-                    
+                    <Image src="/assets/images/dashboard.svg" alt="Dashboard Preview" width={1440} height={1150}
+                        className="auth-dashboard-preview absolute top-0 object-cover" />
                 </div>
             </section>
         </main>
