@@ -9,7 +9,7 @@ const Header = () => {
         <header className="stricky top-0 header">
             <div className="container header-wrapper">
                 <Link href="/">
-                    <Image src="/assets/icons/ct-logoo.svg" alt="Signalist logo" width={140} height={32}
+                    <Image src="/assets/icons/ct-logoo.svg" alt="Chart Troll logo" width={140} height={32}
                         className="h-8 w-auto cursor-pointer" />
                 </Link>
                 <nav className="hidden sm:block">
