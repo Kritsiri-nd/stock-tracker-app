@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
-import { connectToDatabase } from '@/components/database/mongoose';
+import { getMongoDb } from '@/lib/mongodb';
 import { nextCookies } from 'better-auth/next-js';
 
 
@@ -9,8 +9,7 @@ let authInstance: ReturnType<typeof betterAuth> | null = null;
 export const getAuth = async () => {
     if(authInstance) return authInstance;
 
-    const mongoose = await connectToDatabase();
-    const db = mongoose.connection.db;
+    const db = await getMongoDb();
 
     if(!db) throw new Error("MongoDB connection not found");
 

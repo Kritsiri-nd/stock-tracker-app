@@ -37,7 +37,7 @@ export const sendSignUpEmail = inngest.createFunction(
             const introText = (part && `text` in part ? part.text : null) || `Thanks for joining Charttroll. You now have the tools to track markets and make smarter moves`
 
             const {data: {email, name}} = event
-            return await sendWelcomeEmail({email, name ,introText})
+            return await sendWelcomeEmail({email, name, intro: introText})
         })
         return {
             success: true,
