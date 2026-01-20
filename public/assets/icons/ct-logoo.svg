@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="320" viewBox="0 0 1600 320">
+  <!-- Transparent background for flexible use on light/dark navbars -->
+  <defs>
+    <linearGradient id="gtop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2ecc71"/>
+      <stop offset="1" stop-color="#1f8f4d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Candlestick mascot (simplified) -->
+  <g transform="translate(70,50)">
+    <!-- Wick -->
+    <rect x="60" y="-10" width="16" height="60" rx="8" fill="url(#gtop)"/>
+    <!-- Body -->
+    <rect x="20" y="40" width="120" height="180" rx="24" fill="#e74c3c" stroke="#141416" stroke-width="8"/>
+    <!-- Eyes -->
+    <g transform="translate(40,80)">
+      <ellipse cx="26" cy="24" rx="22" ry="20" fill="#fff" stroke="#141416" stroke-width="5"/>
+      <circle cx="32" cy="26" r="8" fill="#141416"/>
+      <ellipse cx="78" cy="24" rx="22" ry="20" fill="#fff" stroke="#141416" stroke-width="5"/>
+      <circle cx="72" cy="26" r="8" fill="#141416"/>
+      <path d="M8,6 L46,0" stroke="#141416" stroke-width="8" stroke-linecap="round"/>
+      <path d="M62,0 L100,6" stroke="#141416" stroke-width="8" stroke-linecap="round"/>
+    </g>
+    <!-- Smirk -->
+    <path d="M40,140 C70,160 98,155 115,140" fill="none" stroke="#141416" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark (uses system font; you can override with CSS 'font-family') -->
+  <g font-family="Inter, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-weight="800">
+    <text x="240" y="140" font-size="140" fill="#ffffff">Chart</text>
+    <text x="240" y="260" font-size="140" fill="#2ecc71">Troll</text>
+  </g>
+</svg>
