@@ -75,7 +75,8 @@ const WatchlistPage = async () => {
         </div>
       ) : (
         <div className="watchlist-table overflow-hidden rounded-lg border border-gray-600">
-          <table className="w-full text-left">
+          <div className="w-full overflow-x-auto">
+            <table className="min-w-[760px] w-full text-left">
             <thead>
               <tr className="table-header-row">
                 <th className="table-header py-3 px-4">Company</th>
@@ -145,7 +146,8 @@ const WatchlistPage = async () => {
                 );
               })}
             </tbody>
-          </table>
+            </table>
+          </div>
         </div>
       )}
 
