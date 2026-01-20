@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { addToWatchlist } from "@/lib/actions/watchlist.actions";
+import { addToWatchlist, removeFromWatchlist } from "@/lib/actions/watchlist.actions";
+import { cn } from "@/lib/utils";
 
 const WatchlistButton = ({
   symbol,
@@ -29,16 +30,32 @@ const WatchlistButton = ({
     });
   };
 
+  const handleRemove = () => {
+    if (!added) return;
+    setError(null);
+    startTransition(async () => {
+      const result = await removeFromWatchlist(symbol);
+
+      if (result.success) {
+        setAdded(false);
+        onWatchlistChange?.(symbol, false);
+        return;
+      }
+
+      setError(result.error ?? "Failed to remove from watchlist.");
+    });
+  };
+
   return (
     <div className="space-y-2">
       <button
-        className="watchlist-btn"
+        className={cn("watchlist-btn", added && "watchlist-remove")}
         type="button"
-        onClick={handleAdd}
-        disabled={isPending || added}
+        onClick={added ? handleRemove : handleAdd}
+        disabled={isPending}
       >
         {added
-          ? "Added to Watchlist"
+          ? `Remove ${symbol.toUpperCase()} from Watchlist`
           : `Add ${symbol.toUpperCase()} to Watchlist`}
       </button>
       {error && <p className="text-sm text-red-400">{error}</p>}

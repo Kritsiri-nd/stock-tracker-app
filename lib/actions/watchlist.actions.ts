@@ -86,3 +86,21 @@ export async function addToWatchlist(params: {
     return { success: false, error: "Failed to add to watchlist." };
   }
 }
+
+export async function removeFromWatchlist(symbol: string) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  const email = session?.user?.email ?? "";
+  if (!email) return { success: false, error: "Missing user session." };
+  if (!symbol) return { success: false, error: "Missing symbol." };
+
+  try {
+    const userId = await getUserIdByEmail(email);
+    if (!userId) return { success: false, error: "User not found." };
+
+    await Watchlist.deleteOne({ userId, symbol: symbol.toUpperCase() });
+    return { success: true };
+  } catch (err) {
+    console.error("removeFromWatchlist error:", err);
+    return { success: false, error: "Failed to remove from watchlist." };
+  }
+}
