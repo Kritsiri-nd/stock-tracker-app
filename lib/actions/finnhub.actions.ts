@@ -133,3 +133,44 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
     throw new Error('Failed to fetch news');
   }
 }
+
+const getToken = () =>
+  process.env.FINNHUB_API_KEY ?? NEXT_PUBLIC_FINNHUB_API_KEY ?? "";
+
+export async function getQuote(symbol: string): Promise<QuoteData | null> {
+  try {
+    const token = getToken();
+    if (!token) throw new Error("FINNHUB API key is not configured");
+    const url = `${FINNHUB_BASE_URL}/quote?symbol=${encodeURIComponent(symbol)}&token=${token}`;
+    return await fetchJSON<QuoteData>(url, 30);
+  } catch (err) {
+    console.error("getQuote error:", err);
+    return null;
+  }
+}
+
+export async function getProfile(symbol: string): Promise<ProfileData | null> {
+  try {
+    const token = getToken();
+    if (!token) throw new Error("FINNHUB API key is not configured");
+    const url = `${FINNHUB_BASE_URL}/stock/profile2?symbol=${encodeURIComponent(symbol)}&token=${token}`;
+    return await fetchJSON<ProfileData>(url, 300);
+  } catch (err) {
+    console.error("getProfile error:", err);
+    return null;
+  }
+}
+
+export async function getFinancials(
+  symbol: string
+): Promise<FinancialsData | null> {
+  try {
+    const token = getToken();
+    if (!token) throw new Error("FINNHUB API key is not configured");
+    const url = `${FINNHUB_BASE_URL}/stock/metric?symbol=${encodeURIComponent(symbol)}&metric=all&token=${token}`;
+    return await fetchJSON<FinancialsData>(url, 300);
+  } catch (err) {
+    console.error("getFinancials error:", err);
+    return null;
+  }
+}
