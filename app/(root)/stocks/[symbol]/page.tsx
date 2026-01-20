@@ -1,4 +1,5 @@
 import TradingViewWidget from "@/components/TradingViewWidget";
+import WatchlistButton from "@/components/WatchlistButton";
 import {
   BASELINE_WIDGET_CONFIG,
   CANDLE_CHART_WIDGET_CONFIG,
@@ -7,16 +8,21 @@ import {
   SYMBOL_INFO_WIDGET_CONFIG,
   TECHNICAL_ANALYSIS_WIDGET_CONFIG,
 } from "@/lib/constants";
-
-const WatchlistButton = ({ symbol }: { symbol: string }) => (
-  <button className="watchlist-btn" type="button">
-    Add {symbol.toUpperCase()} to Watchlist
-  </button>
-);
+import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
+import { auth } from "@/lib/better-auth/auth";
+import { headers } from "next/headers";
 
 const StockDetails = async ({ params }: StockDetailsPageProps) => {
   const { symbol } = await params;
   const scriptUrl = "https://s3.tradingview.com/external-embedding/embed-widget-";
+  const session = await auth.api.getSession({ headers: await headers() });
+  const email = session?.user?.email ?? "";
+  const watchlistSymbols = email
+    ? await getWatchlistSymbolsByEmail(email)
+    : [];
+  const isInWatchlist = watchlistSymbols
+    .map((item) => item.toUpperCase())
+    .includes(symbol.toUpperCase());
 
   return (
     <div className="container py-6">
@@ -39,7 +45,11 @@ const StockDetails = async ({ params }: StockDetailsPageProps) => {
           />
         </section>
         <section className="space-y-8">
-          <WatchlistButton symbol={symbol} />
+          <WatchlistButton
+            symbol={symbol}
+            company={symbol.toUpperCase()}
+            isInWatchlist={isInWatchlist}
+          />
           <TradingViewWidget
             scriptUrl={`${scriptUrl}technical-analysis.js`}
             config={TECHNICAL_ANALYSIS_WIDGET_CONFIG(symbol)}
